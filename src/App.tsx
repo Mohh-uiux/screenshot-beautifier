@@ -65,7 +65,7 @@ export default function App() {
 
   return (
     <div
-      className="flex h-full flex-col bg-neutral-100"
+      className="relative h-full bg-neutral-100"
       onDragOver={(e) => {
         e.preventDefault()
         setDragging(true)
@@ -78,60 +78,39 @@ export default function App() {
         if (f) handleFile(f)
       }}
     >
-      <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-5 py-3">
-        <div className="flex items-center gap-2">
-          <span className="text-base font-semibold text-neutral-900">prettify</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const f = e.target.files?.[0]
-              if (f) handleFile(f)
-              e.target.value = ''
-            }}
-          />
-          {image && (
-            <>
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700 transition hover:border-neutral-300"
-              >
-                New image
-              </button>
-              <button
-                onClick={copy}
-                className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700 transition hover:border-neutral-300"
-              >
-                {copied ? 'Copied!' : 'Copy'}
-              </button>
-              <button
-                onClick={download}
-                className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-neutral-700"
-              >
-                Export PNG
-              </button>
-            </>
-          )}
-        </div>
-      </header>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+          const f = e.target.files?.[0]
+          if (f) handleFile(f)
+          e.target.value = ''
+        }}
+      />
 
-      <div className="flex min-h-0 flex-1">
-        {image && <Sidebar settings={settings} onChange={onChange} />}
-        <main className="relative min-w-0 flex-1">
-          {image ? (
+      {image ? (
+        <>
+          <div className="h-full pl-80">
             <Canvas image={image} settings={settings} exportRef={exportRef} />
-          ) : (
-            <Uploader onFile={handleFile} />
-          )}
-          {dragging && (
-            <div className="pointer-events-none absolute inset-0 z-10 m-4 rounded-xl border-2 border-dashed border-neutral-900/40 bg-white/60" />
-          )}
-        </main>
-      </div>
+          </div>
+          <Sidebar
+            settings={settings}
+            onChange={onChange}
+            onNewImage={() => fileInputRef.current?.click()}
+            onCopy={copy}
+            onDownload={download}
+            copied={copied}
+          />
+        </>
+      ) : (
+        <Uploader onFile={handleFile} />
+      )}
+
+      {dragging && (
+        <div className="pointer-events-none absolute inset-0 z-30 m-4 rounded-xl border-2 border-dashed border-neutral-900/40 bg-white/60" />
+      )}
     </div>
   )
 }

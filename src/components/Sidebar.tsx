@@ -4,6 +4,10 @@ import { ASPECT_RATIOS, GRADIENTS, SOLIDS } from '../lib/presets'
 interface Props {
   settings: Settings
   onChange: (patch: Partial<Settings>) => void
+  onNewImage: () => void
+  onCopy: () => void
+  onDownload: () => void
+  copied: boolean
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -54,9 +58,35 @@ const FRAMES: { value: FrameStyle; label: string }[] = [
   { value: 'browser', label: 'Browser' },
 ]
 
-export function Sidebar({ settings, onChange }: Props) {
+export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, copied }: Props) {
   return (
-    <aside className="flex h-full w-72 shrink-0 flex-col overflow-y-auto border-r border-neutral-200 bg-white">
+    <aside className="absolute bottom-4 left-4 top-4 z-20 flex w-72 flex-col overflow-y-auto rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
+      <div className="border-b border-neutral-200 px-5 pb-4 pt-5">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-base font-semibold text-neutral-900">prettify</span>
+          <button
+            onClick={onNewImage}
+            className="rounded-md px-2 py-1 text-xs text-neutral-500 transition hover:text-neutral-900"
+          >
+            New image
+          </button>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={onCopy}
+            className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700 transition hover:border-neutral-300"
+          >
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
+          <button
+            onClick={onDownload}
+            className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-neutral-700"
+          >
+            Export PNG
+          </button>
+        </div>
+      </div>
+
       <Section title="Background">
         <div className="mb-3 grid grid-cols-6 gap-2">
           {GRADIENTS.map((g) => (
