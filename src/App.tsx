@@ -92,7 +92,7 @@ export default function App() {
 
       {image ? (
         <>
-          <div className="h-full pl-80">
+          <div className="h-full pr-80">
             <Canvas image={image} settings={settings} exportRef={exportRef} />
           </div>
           <Sidebar

@@ -60,7 +60,7 @@ const FRAMES: { value: FrameStyle; label: string }[] = [
 
 export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, copied }: Props) {
   return (
-    <aside className="absolute bottom-4 left-4 top-4 z-20 flex w-72 flex-col overflow-y-auto rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
+    <aside className="absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col overflow-y-auto rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
       <div className="border-b border-neutral-200 px-5 pb-4 pt-5">
         <div className="mb-3 flex items-center justify-between">
           <span
