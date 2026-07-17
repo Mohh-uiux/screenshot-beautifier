@@ -7,14 +7,27 @@ import { loadImageFromFile } from './lib/image'
 import { Sidebar } from './components/Sidebar'
 import { Canvas } from './components/Canvas'
 import { Uploader } from './components/Uploader'
+import { MobileNotice } from './components/MobileNotice'
+
+const MOBILE_QUERY = '(max-width: 767px)'
 
 export default function App() {
   const [image, setImage] = useState<ImageData | null>(null)
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
   const [dragging, setDragging] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
+  )
   const exportRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY)
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   const onChange = useCallback(
     (patch: Partial<Settings>) => setSettings((s) => ({ ...s, ...patch })),
@@ -63,6 +76,8 @@ export default function App() {
       // clipboard image write not supported in this browser
     }
   }, [])
+
+  if (isMobile) return <MobileNotice />
 
   return (
     <div
