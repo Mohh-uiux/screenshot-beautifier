@@ -44,7 +44,7 @@ export default function App() {
 
   const download = useCallback(async () => {
     if (!exportRef.current) return
-    const dataUrl = await toPng(exportRef.current, { pixelRatio: 2, cacheBust: true })
+    const dataUrl = await toPng(exportRef.current, { pixelRatio: 2, cacheBust: true, skipFonts: true })
     const a = document.createElement('a')
     a.href = dataUrl
     a.download = `screenshot-${Date.now()}.png`
@@ -54,7 +54,7 @@ export default function App() {
   const copy = useCallback(async () => {
     if (!exportRef.current) return
     try {
-      const blob = await toBlob(exportRef.current, { pixelRatio: 2, cacheBust: true })
+      const blob = await toBlob(exportRef.current, { pixelRatio: 2, cacheBust: true, skipFonts: true })
       if (!blob) return
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
       setCopied(true)
