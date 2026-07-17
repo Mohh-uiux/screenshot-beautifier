@@ -63,7 +63,12 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
     <aside className="absolute bottom-4 left-4 top-4 z-20 flex w-72 flex-col overflow-y-auto rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
       <div className="border-b border-neutral-200 px-5 pb-4 pt-5">
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-base font-semibold text-neutral-900">prettify</span>
+          <span
+            className="text-2xl italic leading-none tracking-tight text-neutral-900"
+            style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+          >
+            prettify
+          </span>
           <button
             onClick={onNewImage}
             className="rounded-md px-2 py-1 text-xs text-neutral-500 transition hover:text-neutral-900"
