@@ -60,38 +60,23 @@ const FRAMES: { value: FrameStyle; label: string }[] = [
 
 export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, copied }: Props) {
   return (
-    <aside className="absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col overflow-y-auto rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
-      <div className="border-b border-neutral-200 px-5 pb-4 pt-5">
-        <div className="mb-3 flex items-center justify-between">
-          <span
-            className="text-2xl italic leading-none tracking-tight text-neutral-900"
-            style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-          >
-            prettify
-          </span>
-          <button
-            onClick={onNewImage}
-            className="rounded-md px-2 py-1 text-xs text-neutral-500 transition hover:text-neutral-900"
-          >
-            New image
-          </button>
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            onClick={onCopy}
-            className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700 transition hover:border-neutral-300"
-          >
-            {copied ? 'Copied!' : 'Copy'}
-          </button>
-          <button
-            onClick={onDownload}
-            className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-neutral-700"
-          >
-            Export PNG
-          </button>
-        </div>
+    <aside className="absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
+      <div className="flex items-center justify-between border-b border-neutral-200 px-5 pb-4 pt-5">
+        <span
+          className="text-2xl italic leading-none tracking-tight text-neutral-900"
+          style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+        >
+          prettify
+        </span>
+        <button
+          onClick={onNewImage}
+          className="rounded-md px-2 py-1 text-xs text-neutral-500 transition hover:text-neutral-900"
+        >
+          New image
+        </button>
       </div>
 
+      <div className="min-h-0 flex-1 overflow-y-auto">
       <Section title="Background">
         <div className="mb-3 grid grid-cols-6 gap-2">
           {GRADIENTS.map((g) => (
@@ -162,6 +147,22 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
           ))}
         </div>
       </Section>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 border-t border-neutral-200 px-5 py-4">
+        <button
+          onClick={onCopy}
+          className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700 transition hover:border-neutral-300"
+        >
+          {copied ? 'Copied!' : 'Copy'}
+        </button>
+        <button
+          onClick={onDownload}
+          className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-neutral-700"
+        >
+          Export PNG
+        </button>
+      </div>
     </aside>
   )
 }
