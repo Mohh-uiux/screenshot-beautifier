@@ -80,7 +80,7 @@ export default function App() {
     >
       <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-5 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-base font-semibold text-neutral-900">Screenshot Beautifier</span>
+          <span className="text-base font-semibold text-neutral-900">prettify</span>
         </div>
         <div className="flex items-center gap-2">
           <input
