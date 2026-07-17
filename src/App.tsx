@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { toBlob, toPng } from 'html-to-image'
 import type { ImageData, Settings } from './lib/types'
 import { DEFAULT_SETTINGS } from './lib/presets'
@@ -111,6 +112,7 @@ export default function App() {
       {dragging && (
         <div className="pointer-events-none absolute inset-0 z-30 m-4 rounded-xl border-2 border-dashed border-neutral-900/40 bg-white/60" />
       )}
+      <Analytics />
     </div>
   )
 }
