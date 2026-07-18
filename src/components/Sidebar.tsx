@@ -1,4 +1,4 @@
-import type { FrameStyle, Settings } from '../lib/types'
+import type { FrameStyle, FrameTheme, Settings } from '../lib/types'
 import { ASPECT_RATIOS, GRADIENTS, SOLIDS } from '../lib/presets'
 
 interface Props {
@@ -56,6 +56,12 @@ const FRAMES: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
   { value: 'mac', label: 'macOS' },
   { value: 'browser', label: 'Browser' },
+  { value: 'windows', label: 'Windows' },
+]
+
+const THEMES: { value: FrameTheme; label: string }[] = [
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
 ]
 
 export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, copied }: Props) {
@@ -107,7 +113,7 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
       </Section>
 
       <Section title="Frame">
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {FRAMES.map((f) => (
             <button
               key={f.value}
@@ -122,6 +128,23 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
             </button>
           ))}
         </div>
+        {settings.frame !== 'none' && (
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {THEMES.map((t) => (
+              <button
+                key={t.value}
+                onClick={() => onChange({ frameTheme: t.value })}
+                className={`rounded-md border px-2 py-1.5 text-sm transition ${
+                  settings.frameTheme === t.value
+                    ? 'border-neutral-900 bg-neutral-900 text-white'
+                    : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        )}
       </Section>
 
       <Section title="Adjust">

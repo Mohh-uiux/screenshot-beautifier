@@ -64,7 +64,7 @@ export function Canvas({ image, settings, exportRef }: Props) {
                 boxShadow: shadowValue(settings.shadow),
               }}
             >
-              <FrameBar frame={settings.frame} barH={layout.barH} />
+              <FrameBar frame={settings.frame} theme={settings.frameTheme} barH={layout.barH} />
               <img
                 src={image.src}
                 alt=""

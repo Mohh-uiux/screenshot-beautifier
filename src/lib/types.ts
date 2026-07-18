@@ -1,4 +1,5 @@
-export type FrameStyle = 'none' | 'mac' | 'browser'
+export type FrameStyle = 'none' | 'mac' | 'browser' | 'windows'
+export type FrameTheme = 'light' | 'dark'
 
 export interface Settings {
   background: string
@@ -6,6 +7,7 @@ export interface Settings {
   cornerRadius: number
   shadow: number
   frame: FrameStyle
+  frameTheme: FrameTheme
   aspectRatio: string
 }
 
