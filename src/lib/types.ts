@@ -6,6 +6,7 @@ export interface Settings {
   padding: number
   cornerRadius: number
   shadow: number
+  noise: number
   frame: FrameStyle
   frameTheme: FrameTheme
   aspectRatio: string

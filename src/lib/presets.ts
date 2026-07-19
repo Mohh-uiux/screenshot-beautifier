@@ -36,6 +36,7 @@ export const DEFAULT_SETTINGS = {
   padding: 96,
   cornerRadius: 12,
   shadow: 55,
+  noise: 0,
   frame: 'mac' as const,
   frameTheme: 'light' as const,
   aspectRatio: 'auto',

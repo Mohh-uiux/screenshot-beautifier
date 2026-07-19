@@ -128,29 +128,31 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
             </button>
           ))}
         </div>
-        {settings.frame !== 'none' && (
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            {THEMES.map((t) => (
-              <button
-                key={t.value}
-                onClick={() => onChange({ frameTheme: t.value })}
-                className={`rounded-md border px-2 py-1.5 text-sm transition ${
-                  settings.frameTheme === t.value
-                    ? 'border-neutral-900 bg-neutral-900 text-white'
-                    : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-        )}
+      </Section>
+
+      <Section title="Theme">
+        <div className="grid grid-cols-2 gap-2">
+          {THEMES.map((t) => (
+            <button
+              key={t.value}
+              onClick={() => onChange({ frameTheme: t.value })}
+              className={`rounded-md border px-2 py-1.5 text-sm transition ${
+                settings.frameTheme === t.value
+                  ? 'border-neutral-900 bg-neutral-900 text-white'
+                  : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
       </Section>
 
       <Section title="Adjust">
         <Slider label="Padding" value={settings.padding} min={0} max={256} onChange={(v) => onChange({ padding: v })} />
         <Slider label="Rounding" value={settings.cornerRadius} min={0} max={48} onChange={(v) => onChange({ cornerRadius: v })} />
         <Slider label="Shadow" value={settings.shadow} min={0} max={100} onChange={(v) => onChange({ shadow: v })} />
+        <Slider label="Noise" value={settings.noise} min={0} max={100} onChange={(v) => onChange({ noise: v })} />
       </Section>
 
       <Section title="Aspect ratio">
