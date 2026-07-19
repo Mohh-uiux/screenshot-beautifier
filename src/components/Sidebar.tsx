@@ -131,20 +131,28 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
       </Section>
 
       <Section title="Theme">
-        <div className="grid grid-cols-2 gap-2">
+        <div className="relative grid grid-cols-2 gap-2">
           {THEMES.map((t) => (
             <button
               key={t.value}
+              disabled={settings.frame === 'none'}
               onClick={() => onChange({ frameTheme: t.value })}
-              className={`rounded-md border px-2 py-1.5 text-sm transition ${
+              className={`rounded-md border px-2 py-1.5 text-sm transition disabled:opacity-40 ${
                 settings.frameTheme === t.value
                   ? 'border-neutral-900 bg-neutral-900 text-white'
-                  : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'
+                  : 'border-neutral-200 text-neutral-700 enabled:hover:border-neutral-300'
               }`}
             >
               {t.label}
             </button>
           ))}
+          {settings.frame === 'none' && (
+            <div className="group absolute inset-0 cursor-not-allowed">
+              <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 shadow-md transition group-hover:opacity-100">
+                Select a frame first
+              </span>
+            </div>
+          )}
         </div>
       </Section>
 
