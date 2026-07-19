@@ -27,7 +27,7 @@ export function computeLayout(
   const barH =
     settings.frame === 'none'
       ? 0
-      : Math.round(Math.min(Math.max(imgW * 0.038, 28), 52))
+      : Math.round(Math.min(Math.max(imgW * 0.03, 22), 40))
 
   const cardW = imgW
   const cardH = imgH + barH
