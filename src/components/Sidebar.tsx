@@ -170,9 +170,16 @@ export function Sidebar({
         <button
           onClick={smartMatch}
           disabled={matching}
-          className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-md border border-neutral-200 py-2 text-sm text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50 disabled:opacity-60"
+          className="group mb-3 flex w-full items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 bg-[length:200%_100%] bg-left py-2 text-sm font-medium text-white shadow-[0_4px_14px_-4px_rgba(124,58,237,0.6)] transition-all duration-500 hover:bg-right hover:shadow-[0_6px_20px_-4px_rgba(124,58,237,0.7)] active:scale-[0.99] disabled:opacity-70"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden
+            className={matching ? 'animate-pulse' : 'transition-transform duration-300 group-hover:rotate-[15deg] group-hover:scale-110'}
+          >
             <path d="M12 2l1.6 4.6L18 8.2l-4.4 1.6L12 14l-1.6-4.2L6 8.2l4.4-1.6L12 2z" />
             <path d="M19 13l.8 2.2 2.2.8-2.2.8L19 19l-.8-2.2-2.2-.8 2.2-.8L19 13z" />
           </svg>
