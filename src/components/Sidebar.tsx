@@ -7,9 +7,6 @@ interface Props {
   settings: Settings
   onChange: (patch: Partial<Settings>) => void
   onNewImage: () => void
-  onCopy: () => void
-  onDownload: () => void
-  copied: boolean
   imageSrc: string
 }
 
@@ -81,15 +78,7 @@ const THEMES: { value: FrameTheme; label: string }[] = [
   { value: 'dark', label: 'Dark' },
 ]
 
-export function Sidebar({
-  settings,
-  onChange,
-  onNewImage,
-  onCopy,
-  onDownload,
-  copied,
-  imageSrc,
-}: Props) {
+export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
   const [customMode, setCustomMode] = useState<'solid' | 'gradient'>('gradient')
   const [solid, setSolid] = useState('#6366f1')
   const [gradA, setGradA] = useState('#667eea')
@@ -307,21 +296,6 @@ export function Sidebar({
           ))}
         </div>
       </Section>
-      </div>
-
-      <div className="grid grid-cols-2 gap-2 border-t border-neutral-200 px-5 py-4">
-        <button
-          onClick={onCopy}
-          className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700 transition hover:border-neutral-300"
-        >
-          {copied ? 'Copied!' : 'Copy'}
-        </button>
-        <button
-          onClick={onDownload}
-          className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-neutral-700"
-        >
-          Export PNG
-        </button>
       </div>
     </aside>
   )

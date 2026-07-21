@@ -111,13 +111,28 @@ export default function App() {
           <div className="h-full pr-80">
             <Canvas image={image} settings={settings} exportRef={exportRef} />
           </div>
+
+          <div className="pointer-events-none absolute bottom-6 left-0 right-80 z-20 flex justify-center">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-neutral-200/70 bg-white/80 p-1.5 shadow-lg ring-1 ring-black/5 backdrop-blur">
+              <button
+                onClick={copy}
+                className="rounded-full px-4 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100"
+              >
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+              <button
+                onClick={download}
+                className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-700"
+              >
+                Export PNG
+              </button>
+            </div>
+          </div>
+
           <Sidebar
             settings={settings}
             onChange={onChange}
             onNewImage={() => fileInputRef.current?.click()}
-            onCopy={copy}
-            onDownload={download}
-            copied={copied}
             imageSrc={image.src}
           />
         </>
