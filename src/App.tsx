@@ -113,16 +113,16 @@ export default function App() {
           </div>
 
           <div className="pointer-events-none absolute bottom-6 left-0 right-80 z-20 flex justify-center">
-            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-neutral-200/70 bg-white/80 p-1.5 shadow-lg ring-1 ring-black/5 backdrop-blur">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full bg-neutral-900 p-1.5 shadow-lg ring-1 ring-black/10">
               <button
                 onClick={copy}
-                className="rounded-full px-4 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100"
+                className="rounded-full px-4 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/10 hover:text-white"
               >
                 {copied ? 'Copied!' : 'Copy'}
               </button>
               <button
                 onClick={download}
-                className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-700"
+                className="rounded-full bg-white px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
               >
                 Export PNG
               </button>
