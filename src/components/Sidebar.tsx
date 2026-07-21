@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import type { FrameStyle, FrameTheme, Settings } from '../lib/types'
 import { ASPECT_RATIOS, GRADIENTS, SOLIDS } from '../lib/presets'
+import { buildGradient, matchGradient } from '../lib/color'
 
 interface Props {
   settings: Settings
@@ -8,6 +10,21 @@ interface Props {
   onCopy: () => void
   onDownload: () => void
   copied: boolean
+  imageSrc: string
+}
+
+function ColorField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <label className="relative block h-8 w-8 cursor-pointer overflow-hidden rounded-md ring-1 ring-black/10">
+      <span className="absolute inset-0" style={{ background: value }} />
+      <input
+        type="color"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+      />
+    </label>
+  )
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -64,7 +81,46 @@ const THEMES: { value: FrameTheme; label: string }[] = [
   { value: 'dark', label: 'Dark' },
 ]
 
-export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, copied }: Props) {
+export function Sidebar({
+  settings,
+  onChange,
+  onNewImage,
+  onCopy,
+  onDownload,
+  copied,
+  imageSrc,
+}: Props) {
+  const [customMode, setCustomMode] = useState<'solid' | 'gradient'>('gradient')
+  const [solid, setSolid] = useState('#6366f1')
+  const [gradA, setGradA] = useState('#667eea')
+  const [gradB, setGradB] = useState('#764ba2')
+  const [angle, setAngle] = useState(135)
+  const [matching, setMatching] = useState(false)
+
+  const customGradient = buildGradient(gradA, gradB, angle)
+
+  const applySolid = (c: string) => {
+    setSolid(c)
+    onChange({ background: c })
+  }
+  const applyGradient = (a: string, b: string, ang: number) => {
+    setGradA(a)
+    setGradB(b)
+    setAngle(ang)
+    onChange({ background: buildGradient(a, b, ang) })
+  }
+  const smartMatch = async () => {
+    if (matching) return
+    setMatching(true)
+    try {
+      const [a, b] = await matchGradient(imageSrc)
+      setCustomMode('gradient')
+      applyGradient(a, b, 135)
+    } finally {
+      setMatching(false)
+    }
+  }
+
   return (
     <aside className="absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
       <div className="flex items-center justify-between border-b border-neutral-200 px-5 pb-4 pt-5">
@@ -97,7 +153,7 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
             />
           ))}
         </div>
-        <div className="grid grid-cols-6 gap-2">
+        <div className="mb-4 grid grid-cols-6 gap-2">
           {SOLIDS.map((s) => (
             <button
               key={s.name}
@@ -109,6 +165,70 @@ export function Sidebar({ settings, onChange, onNewImage, onCopy, onDownload, co
               style={{ background: s.value }}
             />
           ))}
+        </div>
+
+        <button
+          onClick={smartMatch}
+          disabled={matching}
+          className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-md border border-neutral-200 py-2 text-sm text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50 disabled:opacity-60"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <path d="M12 2l1.6 4.6L18 8.2l-4.4 1.6L12 14l-1.6-4.2L6 8.2l4.4-1.6L12 2z" />
+            <path d="M19 13l.8 2.2 2.2.8-2.2.8L19 19l-.8-2.2-2.2-.8 2.2-.8L19 13z" />
+          </svg>
+          {matching ? 'Matching…' : 'Match to screenshot'}
+        </button>
+
+        <div className="rounded-lg border border-neutral-200 p-3">
+          <div className="mb-3 flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium">
+            {(['solid', 'gradient'] as const).map((m) => (
+              <button
+                key={m}
+                onClick={() => setCustomMode(m)}
+                className={`flex-1 rounded-[5px] py-1 capitalize transition ${
+                  customMode === m ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-500'
+                }`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+
+          {customMode === 'solid' ? (
+            <div className="flex items-center gap-2">
+              <ColorField value={solid} onChange={applySolid} />
+              <span className="font-mono text-xs uppercase text-neutral-500">{solid}</span>
+              <span
+                className="ml-auto h-8 w-16 rounded-md ring-1 ring-black/10"
+                style={{ background: solid }}
+              />
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              <div className="flex items-center gap-2">
+                <ColorField value={gradA} onChange={(v) => applyGradient(v, gradB, angle)} />
+                <ColorField value={gradB} onChange={(v) => applyGradient(gradA, v, angle)} />
+                <span
+                  className="ml-auto h-8 flex-1 rounded-md ring-1 ring-black/10"
+                  style={{ background: customGradient }}
+                />
+              </div>
+              <div>
+                <div className="mb-1 flex items-center justify-between text-xs text-neutral-500">
+                  <span>Angle</span>
+                  <span className="tabular-nums text-neutral-400">{angle}°</span>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={360}
+                  value={angle}
+                  onChange={(e) => applyGradient(gradA, gradB, Number(e.target.value))}
+                  className="w-full accent-neutral-900"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </Section>
 

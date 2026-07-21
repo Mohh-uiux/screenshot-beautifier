@@ -118,6 +118,7 @@ export default function App() {
             onCopy={copy}
             onDownload={download}
             copied={copied}
+            imageSrc={image.src}
           />
         </>
       ) : (
