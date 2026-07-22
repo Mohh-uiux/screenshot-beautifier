@@ -51,6 +51,7 @@ export function Canvas({ image, settings, exportRef }: Props) {
               width: layout.W,
               height: layout.H,
               background: settings.background,
+              perspective: Math.max(layout.W, layout.H) * 1.8,
             }}
           >
             {settings.noise > 0 && (
@@ -72,6 +73,8 @@ export function Canvas({ image, settings, exportRef }: Props) {
                 height: layout.cardH,
                 borderRadius: settings.cornerRadius,
                 boxShadow: shadowValue(settings.shadow),
+                transform: `rotateX(${settings.tiltX}deg) rotateY(${settings.tiltY}deg)`,
+                transformStyle: 'preserve-3d',
               }}
             >
               <FrameBar frame={settings.frame} theme={settings.frameTheme} barH={layout.barH} />

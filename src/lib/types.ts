@@ -10,6 +10,8 @@ export interface Settings {
   frame: FrameStyle
   frameTheme: FrameTheme
   aspectRatio: string
+  tiltX: number
+  tiltY: number
 }
 
 export interface ImageData {

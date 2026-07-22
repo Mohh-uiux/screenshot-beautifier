@@ -40,4 +40,6 @@ export const DEFAULT_SETTINGS = {
   frame: 'mac' as const,
   frameTheme: 'light' as const,
   aspectRatio: 'auto',
+  tiltX: 0,
+  tiltY: 0,
 }
