@@ -24,13 +24,47 @@ function ColorField({ value, onChange }: { value: string; onChange: (v: string) 
   )
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+  defaultOpen = true,
+}: {
+  title: string
+  children: React.ReactNode
+  defaultOpen?: boolean
+}) {
+  const [open, setOpen] = useState(defaultOpen)
   return (
-    <div className="border-b border-neutral-200 px-5 py-4">
-      <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+    <div className="border-b border-neutral-200">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-neutral-500 transition hover:text-neutral-800"
+      >
         {title}
-      </h3>
-      {children}
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+          className={`transition-transform duration-200 ${open ? '' : '-rotate-90'}`}
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div
+        className={`grid transition-all duration-200 ${
+          open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-5 pb-4">{children}</div>
+        </div>
+      </div>
     </div>
   )
 }
