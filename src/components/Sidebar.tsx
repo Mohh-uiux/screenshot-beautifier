@@ -262,7 +262,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
         </div>
       </Section>
 
-      <Section title="Frame">
+      <Section title="Frame" defaultOpen={false}>
         <div className="grid grid-cols-2 gap-2">
           {FRAMES.map((f) => (
             <button
@@ -280,7 +280,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
         </div>
       </Section>
 
-      <Section title="Theme">
+      <Section title="Theme" defaultOpen={false}>
         <div className="relative grid grid-cols-2 gap-2">
           {THEMES.map((t) => (
             <button
