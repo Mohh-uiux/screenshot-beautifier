@@ -22,6 +22,82 @@ export const SOLIDS: { name: string; value: string }[] = [
   { name: 'Black', value: '#000000' },
 ]
 
+// Mesh gradients: several radial-gradient "blobs" over a base color.
+// Stored as a single `background` shorthand so it drops straight into
+// the existing `background` style (and exports cleanly via html-to-image).
+function mesh(base: string, blobs: [number, number, string][]): string {
+  const layers = blobs
+    .map(([x, y, c]) => `radial-gradient(at ${x}% ${y}%, ${c} 0px, transparent 50%)`)
+    .join(', ')
+  return `${layers}, ${base}`
+}
+
+export const MESHES: { name: string; value: string }[] = [
+  {
+    name: 'Aurora',
+    value: mesh('#7c3aed', [
+      [27, 37, 'hsla(215,98%,61%,1)'],
+      [97, 21, 'hsla(125,98%,72%,1)'],
+      [52, 99, 'hsla(354,98%,61%,1)'],
+      [10, 29, 'hsla(256,96%,67%,1)'],
+      [97, 96, 'hsla(38,60%,74%,1)'],
+      [33, 50, 'hsla(222,67%,73%,1)'],
+      [79, 53, 'hsla(343,68%,79%,1)'],
+    ]),
+  },
+  {
+    name: 'Sunset',
+    value: mesh('#ff6b6b', [
+      [10, 20, 'hsla(28,100%,74%,1)'],
+      [80, 0, 'hsla(340,100%,76%,1)'],
+      [0, 50, 'hsla(22,100%,77%,1)'],
+      [80, 50, 'hsla(355,90%,67%,1)'],
+      [0, 100, 'hsla(340,100%,76%,1)'],
+      [80, 100, 'hsla(14,100%,64%,1)'],
+    ]),
+  },
+  {
+    name: 'Ocean',
+    value: mesh('#0ea5e9', [
+      [0, 0, 'hsla(200,100%,70%,1)'],
+      [100, 20, 'hsla(190,100%,60%,1)'],
+      [20, 80, 'hsla(220,90%,60%,1)'],
+      [100, 100, 'hsla(175,80%,55%,1)'],
+      [50, 50, 'hsla(210,100%,72%,1)'],
+    ]),
+  },
+  {
+    name: 'Candy',
+    value: mesh('#d946ef', [
+      [0, 10, 'hsla(300,100%,75%,1)'],
+      [90, 10, 'hsla(190,100%,70%,1)'],
+      [10, 90, 'hsla(280,100%,72%,1)'],
+      [90, 90, 'hsla(330,100%,72%,1)'],
+      [50, 40, 'hsla(260,100%,78%,1)'],
+    ]),
+  },
+  {
+    name: 'Forest',
+    value: mesh('#16a34a', [
+      [10, 20, 'hsla(140,70%,60%,1)'],
+      [90, 10, 'hsla(90,70%,60%,1)'],
+      [20, 90, 'hsla(160,70%,45%,1)'],
+      [90, 80, 'hsla(120,60%,55%,1)'],
+      [50, 50, 'hsla(150,65%,58%,1)'],
+    ]),
+  },
+  {
+    name: 'Dusk',
+    value: mesh('#1e1b4b', [
+      [20, 20, 'hsla(260,90%,55%,1)'],
+      [80, 10, 'hsla(300,80%,55%,1)'],
+      [10, 80, 'hsla(220,90%,50%,1)'],
+      [90, 90, 'hsla(280,85%,50%,1)'],
+      [50, 50, 'hsla(240,80%,45%,1)'],
+    ]),
+  },
+]
+
 export const ASPECT_RATIOS: { name: string; value: string; ratio: number | null }[] = [
   { name: 'Auto', value: 'auto', ratio: null },
   { name: '16:9', value: '16:9', ratio: 16 / 9 },

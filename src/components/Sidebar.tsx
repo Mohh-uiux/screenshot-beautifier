@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { FrameStyle, FrameTheme, Settings } from '../lib/types'
-import { ASPECT_RATIOS, GRADIENTS, SOLIDS } from '../lib/presets'
+import { ASPECT_RATIOS, GRADIENTS, MESHES, SOLIDS } from '../lib/presets'
 import { buildGradient, matchGradient } from '../lib/color'
 
 interface Props {
@@ -173,6 +173,19 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
                 settings.background === g.value ? 'ring-2 ring-neutral-900' : 'ring-1 ring-black/10'
               }`}
               style={{ background: g.value }}
+            />
+          ))}
+        </div>
+        <div className="mb-3 grid grid-cols-6 gap-2">
+          {MESHES.map((m) => (
+            <button
+              key={m.name}
+              title={m.name}
+              onClick={() => onChange({ background: m.value })}
+              className={`aspect-square rounded-md ring-offset-1 transition ${
+                settings.background === m.value ? 'ring-2 ring-neutral-900' : 'ring-1 ring-black/10'
+              }`}
+              style={{ background: m.value }}
             />
           ))}
         </div>
