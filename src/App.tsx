@@ -8,6 +8,8 @@ import { Sidebar } from './components/Sidebar'
 import { Canvas } from './components/Canvas'
 import { Uploader } from './components/Uploader'
 import { MobileNotice } from './components/MobileNotice'
+import { ThemeToggle } from './components/ThemeToggle'
+import { useTheme } from './lib/theme'
 
 const MOBILE_QUERY = '(max-width: 767px)'
 
@@ -23,6 +25,7 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
   )
+  const { theme, setTheme } = useTheme()
   const exportRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const pillRef = useRef<HTMLDivElement>(null)
@@ -111,7 +114,7 @@ export default function App() {
 
   return (
     <div
-      className="relative h-full bg-neutral-100"
+      className="relative h-full bg-neutral-100 dark:bg-neutral-950"
       onDragOver={(e) => {
         e.preventDefault()
         setDragging(true)
@@ -145,23 +148,23 @@ export default function App() {
           <div className="pointer-events-none absolute bottom-6 left-0 right-80 z-20 flex justify-center">
             <div
               ref={pillRef}
-              className="pointer-events-auto relative flex items-center gap-1.5 rounded-full bg-neutral-900 p-1.5 shadow-lg ring-1 ring-black/10"
+              className="pointer-events-auto relative flex items-center gap-1.5 rounded-full bg-neutral-900 p-1.5 shadow-lg ring-1 ring-black/10 dark:bg-neutral-800 dark:ring-white/10"
             >
               {menuOpen && (
-                <div className="absolute bottom-full left-1/2 mb-3 w-60 -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white p-3 text-left shadow-xl">
+                <div className="absolute bottom-full left-1/2 mb-3 w-60 -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white p-3 text-left shadow-xl dark:border-neutral-700 dark:bg-neutral-900">
                   <div className="mb-3">
-                    <div className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                    <div className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
                       Scale
                     </div>
-                    <div className="flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium">
+                    <div className="flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium dark:bg-neutral-800">
                       {[1, 2, 3].map((s) => (
                         <button
                           key={s}
                           onClick={() => setExportScale(s)}
                           className={`flex-1 rounded-[5px] py-1 transition ${
                             exportScale === s
-                              ? 'bg-white text-neutral-900 shadow-sm'
-                              : 'text-neutral-500'
+                              ? 'bg-white text-neutral-900 shadow-sm dark:bg-neutral-700 dark:text-white'
+                              : 'text-neutral-500 dark:text-neutral-400'
                           }`}
                         >
                           {s}×
@@ -170,18 +173,18 @@ export default function App() {
                     </div>
                   </div>
                   <div className="mb-3">
-                    <div className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                    <div className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
                       Format
                     </div>
-                    <div className="flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium">
+                    <div className="flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium dark:bg-neutral-800">
                       {(['png', 'jpeg'] as const).map((f) => (
                         <button
                           key={f}
                           onClick={() => setExportFormat(f)}
                           className={`flex-1 rounded-[5px] py-1 uppercase transition ${
                             exportFormat === f
-                              ? 'bg-white text-neutral-900 shadow-sm'
-                              : 'text-neutral-500'
+                              ? 'bg-white text-neutral-900 shadow-sm dark:bg-neutral-700 dark:text-white'
+                              : 'text-neutral-500 dark:text-neutral-400'
                           }`}
                         >
                           {f === 'jpeg' ? 'JPG' : 'PNG'}
@@ -189,7 +192,7 @@ export default function App() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-center text-xs tabular-nums text-neutral-400">
+                  <p className="text-center text-xs tabular-nums text-neutral-400 dark:text-neutral-500">
                     {outSize ? `${outSize.w} × ${outSize.h} px` : ''}
                   </p>
                 </div>
@@ -240,8 +243,10 @@ export default function App() {
         <Uploader onFile={handleFile} />
       )}
 
+      <ThemeToggle theme={theme} setTheme={setTheme} />
+
       {dragging && (
-        <div className="pointer-events-none absolute inset-0 z-30 m-4 rounded-xl border-2 border-dashed border-neutral-900/40 bg-white/60" />
+        <div className="pointer-events-none absolute inset-0 z-30 m-4 rounded-xl border-2 border-dashed border-neutral-900/40 bg-white/60 dark:border-white/30 dark:bg-black/40" />
       )}
       <Analytics />
     </div>

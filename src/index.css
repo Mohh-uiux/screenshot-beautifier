@@ -1,10 +1,17 @@
 @import "tailwindcss";
 
+/* Class-based dark mode so a manual toggle can override the system preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
+}
+
+html.dark {
+  background: #0a0a0a;
 }
 
 body {

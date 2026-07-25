@@ -12,7 +12,7 @@ interface Props {
 
 function ColorField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
-    <label className="relative block h-8 w-8 cursor-pointer overflow-hidden rounded-md ring-1 ring-black/10">
+    <label className="relative block h-8 w-8 cursor-pointer overflow-hidden rounded-md ring-1 ring-black/10 dark:ring-white/15">
       <span className="absolute inset-0" style={{ background: value }} />
       <input
         type="color"
@@ -35,10 +35,10 @@ function Section({
 }) {
   const [open, setOpen] = useState(defaultOpen)
   return (
-    <div className="border-b border-neutral-200">
+    <div className="border-b border-neutral-200 dark:border-neutral-800">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-neutral-500 transition hover:text-neutral-800"
+        className="flex w-full items-center justify-between px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-neutral-500 transition hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
       >
         {title}
         <svg
@@ -84,9 +84,9 @@ function Slider({
 }) {
   return (
     <div className="mb-3 last:mb-0">
-      <div className="mb-1 flex items-center justify-between text-sm text-neutral-600">
+      <div className="mb-1 flex items-center justify-between text-sm text-neutral-600 dark:text-neutral-300">
         <span>{label}</span>
-        <span className="tabular-nums text-neutral-400">{value}</span>
+        <span className="tabular-nums text-neutral-400 dark:text-neutral-500">{value}</span>
       </div>
       <input
         type="range"
@@ -94,7 +94,7 @@ function Slider({
         max={max}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full accent-neutral-900"
+        className="w-full accent-neutral-900 dark:accent-neutral-300"
       />
     </div>
   )
@@ -145,17 +145,17 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
   }
 
   return (
-    <aside className="absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
-      <div className="flex items-center justify-between border-b border-neutral-200 px-5 pb-4 pt-5">
+    <aside className="absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur dark:border-neutral-700/60 dark:bg-neutral-900/90 dark:ring-white/10">
+      <div className="flex items-center justify-between border-b border-neutral-200 px-5 pb-4 pt-5 dark:border-neutral-800">
         <span
-          className="text-2xl italic leading-none tracking-tight text-neutral-900"
+          className="text-2xl italic leading-none tracking-tight text-neutral-900 dark:text-neutral-100"
           style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
         >
           prettify
         </span>
         <button
           onClick={onNewImage}
-          className="rounded-md px-2 py-1 text-xs text-neutral-500 transition hover:text-neutral-900"
+          className="rounded-md px-2 py-1 text-xs text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
         >
           New image
         </button>
@@ -170,7 +170,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
               title={g.name}
               onClick={() => onChange({ background: g.value })}
               className={`aspect-square rounded-md ring-offset-1 transition ${
-                settings.background === g.value ? 'ring-2 ring-neutral-900' : 'ring-1 ring-black/10'
+                settings.background === g.value ? 'ring-2 ring-neutral-900 dark:ring-white' : 'ring-1 ring-black/10 dark:ring-white/15'
               }`}
               style={{ background: g.value }}
             />
@@ -183,7 +183,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
               title={m.name}
               onClick={() => onChange({ background: m.value })}
               className={`aspect-square rounded-md ring-offset-1 transition ${
-                settings.background === m.value ? 'ring-2 ring-neutral-900' : 'ring-1 ring-black/10'
+                settings.background === m.value ? 'ring-2 ring-neutral-900 dark:ring-white' : 'ring-1 ring-black/10 dark:ring-white/15'
               }`}
               style={{ background: m.value }}
             />
@@ -196,7 +196,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
               title={s.name}
               onClick={() => onChange({ background: s.value })}
               className={`aspect-square rounded-md ring-offset-1 transition ${
-                settings.background === s.value ? 'ring-2 ring-neutral-900' : 'ring-1 ring-black/10'
+                settings.background === s.value ? 'ring-2 ring-neutral-900 dark:ring-white' : 'ring-1 ring-black/10 dark:ring-white/15'
               }`}
               style={{ background: s.value }}
             />
@@ -222,14 +222,16 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
           {matching ? 'Matching…' : 'Match to screenshot'}
         </button>
 
-        <div className="rounded-lg border border-neutral-200 p-3">
-          <div className="mb-3 flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium">
+        <div className="rounded-lg border border-neutral-200 p-3 dark:border-neutral-700">
+          <div className="mb-3 flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium dark:bg-neutral-800">
             {(['solid', 'gradient'] as const).map((m) => (
               <button
                 key={m}
                 onClick={() => setCustomMode(m)}
                 className={`flex-1 rounded-[5px] py-1 capitalize transition ${
-                  customMode === m ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-500'
+                  customMode === m
+                    ? 'bg-white text-neutral-900 shadow-sm dark:bg-neutral-700 dark:text-white'
+                    : 'text-neutral-500 dark:text-neutral-400'
                 }`}
               >
                 {m}
@@ -240,9 +242,9 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
           {customMode === 'solid' ? (
             <div className="flex items-center gap-2">
               <ColorField value={solid} onChange={applySolid} />
-              <span className="font-mono text-xs uppercase text-neutral-500">{solid}</span>
+              <span className="font-mono text-xs uppercase text-neutral-500 dark:text-neutral-400">{solid}</span>
               <span
-                className="ml-auto h-8 w-16 rounded-md ring-1 ring-black/10"
+                className="ml-auto h-8 w-16 rounded-md ring-1 ring-black/10 dark:ring-white/15"
                 style={{ background: solid }}
               />
             </div>
@@ -252,14 +254,14 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
                 <ColorField value={gradA} onChange={(v) => applyGradient(v, gradB, angle)} />
                 <ColorField value={gradB} onChange={(v) => applyGradient(gradA, v, angle)} />
                 <span
-                  className="ml-auto h-8 flex-1 rounded-md ring-1 ring-black/10"
+                  className="ml-auto h-8 flex-1 rounded-md ring-1 ring-black/10 dark:ring-white/15"
                   style={{ background: customGradient }}
                 />
               </div>
               <div>
-                <div className="mb-1 flex items-center justify-between text-xs text-neutral-500">
+                <div className="mb-1 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
                   <span>Angle</span>
-                  <span className="tabular-nums text-neutral-400">{angle}°</span>
+                  <span className="tabular-nums text-neutral-400 dark:text-neutral-500">{angle}°</span>
                 </div>
                 <input
                   type="range"
@@ -267,7 +269,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
                   max={360}
                   value={angle}
                   onChange={(e) => applyGradient(gradA, gradB, Number(e.target.value))}
-                  className="w-full accent-neutral-900"
+                  className="w-full accent-neutral-900 dark:accent-neutral-300"
                 />
               </div>
             </div>
@@ -283,8 +285,8 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
               onClick={() => onChange({ frame: f.value })}
               className={`rounded-md border px-2 py-1.5 text-sm transition ${
                 settings.frame === f.value
-                  ? 'border-neutral-900 bg-neutral-900 text-white'
-                  : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'
+                  ? 'border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900'
+                  : 'border-neutral-200 text-neutral-700 hover:border-neutral-300 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500'
               }`}
             >
               {f.label}
@@ -302,8 +304,8 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
               onClick={() => onChange({ frameTheme: t.value })}
               className={`rounded-md border px-2 py-1.5 text-sm transition disabled:opacity-40 ${
                 settings.frameTheme === t.value
-                  ? 'border-neutral-900 bg-neutral-900 text-white'
-                  : 'border-neutral-200 text-neutral-700 enabled:hover:border-neutral-300'
+                  ? 'border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900'
+                  : 'border-neutral-200 text-neutral-700 enabled:hover:border-neutral-300 dark:border-neutral-700 dark:text-neutral-300 dark:enabled:hover:border-neutral-500'
               }`}
             >
               {t.label}
@@ -311,7 +313,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
           ))}
           {settings.frame === 'none' && (
             <div className="group absolute inset-0 cursor-not-allowed">
-              <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 shadow-md transition group-hover:opacity-100">
+              <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 shadow-md transition group-hover:opacity-100 dark:bg-neutral-700">
                 Select a frame first
               </span>
             </div>
@@ -332,7 +334,7 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
         {(settings.tiltX !== 0 || settings.tiltY !== 0) && (
           <button
             onClick={() => onChange({ tiltX: 0, tiltY: 0 })}
-            className="mt-1 text-xs text-neutral-400 transition hover:text-neutral-700"
+            className="mt-1 text-xs text-neutral-400 transition hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-200"
           >
             Reset tilt
           </button>
@@ -347,8 +349,8 @@ export function Sidebar({ settings, onChange, onNewImage, imageSrc }: Props) {
               onClick={() => onChange({ aspectRatio: r.value })}
               className={`rounded-md border px-2 py-1.5 text-sm transition ${
                 settings.aspectRatio === r.value
-                  ? 'border-neutral-900 bg-neutral-900 text-white'
-                  : 'border-neutral-200 text-neutral-700 hover:border-neutral-300'
+                  ? 'border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900'
+                  : 'border-neutral-200 text-neutral-700 hover:border-neutral-300 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500'
               }`}
             >
               {r.name}
