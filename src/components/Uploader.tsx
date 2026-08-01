@@ -10,10 +10,12 @@ export function Uploader({ onFile }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-neutral-950 px-6">
+    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-black px-6">
       {/* ambient glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-[56%] rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#6366f1_0deg,#8b5cf6_120deg,#22d3ee_240deg,#6366f1_360deg)] opacity-30 blur-[130px]" />
+        <div className="absolute left-1/2 top-1/2 h-[640px] w-[640px] -translate-x-1/2 -translate-y-[56%] rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#4f46e5_0deg,#a855f7_110deg,#06b6d4_230deg,#4f46e5_360deg)] opacity-45 blur-[140px]" />
+        {/* soft vignette so the glow melts into pure black at the edges */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#000_85%)]" />
       </div>
 
       {/* grain */}
