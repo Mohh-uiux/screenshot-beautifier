@@ -106,7 +106,7 @@ export function ControlsPanel({ settings, onChange, onNewImage }: Props) {
           <Slider label="Noise" value={settings.noise} min={0} max={100} onChange={(v) => onChange({ noise: v })} />
         </Section>
 
-        <Section title="3D Tilt" defaultOpen={false}>
+        <Section title="3D Tilt">
           <Slider label="Horizontal" value={settings.tiltY} min={-40} max={40} onChange={(v) => onChange({ tiltY: v })} />
           <Slider label="Vertical" value={settings.tiltX} min={-40} max={40} onChange={(v) => onChange({ tiltX: v })} />
           {(settings.tiltX !== 0 || settings.tiltY !== 0) && (
@@ -119,7 +119,7 @@ export function ControlsPanel({ settings, onChange, onNewImage }: Props) {
           )}
         </Section>
 
-        <Section title="Aspect ratio" defaultOpen={false}>
+        <Section title="Aspect ratio">
           <div className="grid grid-cols-3 gap-2">
             {ASPECT_RATIOS.map((r) => (
               <button key={r.value} onClick={() => onChange({ aspectRatio: r.value })} className={optionBtn(settings.aspectRatio === r.value)}>

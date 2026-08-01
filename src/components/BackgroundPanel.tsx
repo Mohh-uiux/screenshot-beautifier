@@ -122,7 +122,7 @@ export function BackgroundPanel({ settings, onChange, imageSrc, theme, setTheme 
           </div>
         </Section>
 
-        <Section title="Custom" defaultOpen={false}>
+        <Section title="Custom">
           <div className="mb-3 flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium dark:bg-neutral-800">
             {(['solid', 'gradient'] as const).map((m) => (
               <button
