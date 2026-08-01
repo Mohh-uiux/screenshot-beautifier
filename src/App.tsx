@@ -4,7 +4,8 @@ import { toBlob, toJpeg, toPng } from 'html-to-image'
 import type { ImageData, Settings } from './lib/types'
 import { DEFAULT_SETTINGS } from './lib/presets'
 import { loadImageFromFile } from './lib/image'
-import { Sidebar } from './components/Sidebar'
+import { BackgroundPanel } from './components/BackgroundPanel'
+import { ControlsPanel } from './components/ControlsPanel'
 import { Canvas } from './components/Canvas'
 import { Uploader } from './components/Uploader'
 import { MobileNotice } from './components/MobileNotice'
@@ -141,11 +142,11 @@ export default function App() {
 
       {image ? (
         <>
-          <div className="h-full pr-80">
+          <div className="h-full px-80">
             <Canvas image={image} settings={settings} exportRef={exportRef} />
           </div>
 
-          <div className="pointer-events-none absolute bottom-6 left-0 right-80 z-20 flex justify-center">
+          <div className="pointer-events-none absolute bottom-6 left-80 right-80 z-20 flex justify-center">
             <div
               ref={pillRef}
               className="pointer-events-auto relative flex items-center gap-1.5 rounded-full bg-neutral-900 p-1.5 shadow-lg ring-1 ring-black/10 dark:bg-neutral-800 dark:ring-white/10"
@@ -232,18 +233,26 @@ export default function App() {
             </div>
           </div>
 
-          <Sidebar
+          <BackgroundPanel
+            settings={settings}
+            onChange={onChange}
+            imageSrc={image.src}
+            theme={theme}
+            setTheme={setTheme}
+          />
+
+          <ControlsPanel
             settings={settings}
             onChange={onChange}
             onNewImage={() => fileInputRef.current?.click()}
-            imageSrc={image.src}
           />
         </>
       ) : (
-        <Uploader onFile={handleFile} />
+        <>
+          <Uploader onFile={handleFile} />
+          <ThemeToggle theme={theme} setTheme={setTheme} />
+        </>
       )}
-
-      <ThemeToggle theme={theme} setTheme={setTheme} />
 
       {dragging && (
         <div className="pointer-events-none absolute inset-0 z-30 m-4 rounded-xl border-2 border-dashed border-neutral-900/40 bg-white/60 dark:border-white/30 dark:bg-black/40" />

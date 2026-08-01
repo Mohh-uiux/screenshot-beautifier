@@ -1,4 +1,4 @@
-export type FrameStyle = 'none' | 'mac' | 'browser' | 'windows'
+export type FrameStyle = 'none' | 'mac' | 'browser' | 'safari' | 'tabs' | 'windows'
 export type FrameTheme = 'light' | 'dark'
 
 export interface Settings {

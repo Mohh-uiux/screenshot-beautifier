@@ -3,6 +3,8 @@ import type { ThemeMode } from '../lib/theme'
 interface Props {
   theme: ThemeMode
   setTheme: (mode: ThemeMode) => void
+  /** Floating overlay (landing page) vs. inline in a panel header. */
+  floating?: boolean
 }
 
 const SunIcon = (
@@ -31,9 +33,13 @@ const OPTIONS: { value: ThemeMode; label: string; icon: React.ReactNode }[] = [
   { value: 'dark', label: 'Dark', icon: MoonIcon },
 ]
 
-export function ThemeToggle({ theme, setTheme }: Props) {
+export function ThemeToggle({ theme, setTheme, floating = true }: Props) {
+  const wrap = floating
+    ? 'pointer-events-auto absolute bottom-6 left-6 z-30 gap-0.5 border border-neutral-200/70 bg-white/80 p-1 shadow-lg ring-1 ring-black/5 backdrop-blur dark:border-neutral-700/60 dark:bg-neutral-900/80 dark:ring-white/10'
+    : 'gap-0.5 bg-neutral-100 p-0.5 dark:bg-neutral-800'
+  const btn = floating ? 'h-8 w-8' : 'h-7 w-7'
   return (
-    <div className="pointer-events-auto absolute bottom-6 left-6 z-30 flex items-center gap-0.5 rounded-full border border-neutral-200/70 bg-white/80 p-1 shadow-lg ring-1 ring-black/5 backdrop-blur dark:border-neutral-700/60 dark:bg-neutral-900/80 dark:ring-white/10">
+    <div className={`flex items-center rounded-full ${wrap}`}>
       {OPTIONS.map((o) => (
         <button
           key={o.value}
@@ -41,7 +47,7 @@ export function ThemeToggle({ theme, setTheme }: Props) {
           title={o.label}
           aria-label={`${o.label} theme`}
           aria-pressed={theme === o.value}
-          className={`flex h-8 w-8 items-center justify-center rounded-full transition ${
+          className={`flex items-center justify-center rounded-full transition ${btn} ${
             theme === o.value
               ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
               : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
