@@ -11,11 +11,19 @@ export function Uploader({ onFile }: Props) {
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-black px-6">
-      {/* ambient glow */}
+      {/* ambient glow — soft overlapping color blobs (no hard conic seam) */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[640px] w-[640px] -translate-x-1/2 -translate-y-[56%] rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#4f46e5_0deg,#a855f7_110deg,#06b6d4_230deg,#4f46e5_360deg)] opacity-45 blur-[140px]" />
-        {/* soft vignette so the glow melts into pure black at the edges */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#000_85%)]" />
+        <div
+          className="absolute left-1/2 top-1/2 h-[760px] w-[1000px] -translate-x-1/2 -translate-y-[54%] blur-[130px]"
+          style={{
+            background:
+              'radial-gradient(42% 55% at 36% 40%, rgba(99,102,241,0.60), transparent 70%),' +
+              'radial-gradient(40% 52% at 66% 52%, rgba(168,85,247,0.50), transparent 72%),' +
+              'radial-gradient(34% 44% at 52% 70%, rgba(34,211,238,0.38), transparent 72%)',
+          }}
+        />
+        {/* vignette so the glow melts into pure black at the edges */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#000_82%)]" />
       </div>
 
       {/* grain */}
