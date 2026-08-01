@@ -158,10 +158,12 @@ export function BackgroundPanel({ settings, onChange, imageSrc, theme, setTheme 
                   style={{ background: customGradient }}
                 />
               </div>
-              <div>
-                <div className="mb-1 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-                  <span>Angle</span>
-                  <span className="tabular-nums text-neutral-400 dark:text-neutral-500">{angle}°</span>
+              <div className="group/slider">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-sm text-neutral-600 dark:text-neutral-300">Angle</span>
+                  <span className="min-w-[2.25rem] rounded-md bg-neutral-100 px-1.5 py-0.5 text-center text-xs font-medium tabular-nums text-neutral-600 transition group-hover/slider:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:group-hover/slider:bg-neutral-700">
+                    {angle}°
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -169,7 +171,10 @@ export function BackgroundPanel({ settings, onChange, imageSrc, theme, setTheme 
                   max={360}
                   value={angle}
                   onChange={(e) => applyGradient(gradA, gradB, Number(e.target.value))}
-                  className="w-full accent-neutral-900 dark:accent-neutral-300"
+                  style={{
+                    background: `linear-gradient(to right, var(--tw-slider-fill) 0%, var(--tw-slider-fill) ${(angle / 360) * 100}%, var(--tw-slider-track) ${(angle / 360) * 100}%, var(--tw-slider-track) 100%)`,
+                  }}
+                  className="h-1.5 w-full cursor-pointer appearance-none rounded-full outline-none [--tw-slider-fill:theme(colors.neutral.900)] [--tw-slider-track:theme(colors.neutral.200)] dark:[--tw-slider-fill:theme(colors.neutral.100)] dark:[--tw-slider-track:theme(colors.neutral.700)] [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:shadow-[0_1px_3px_rgba(0,0,0,0.35)] [&::-moz-range-thumb]:ring-1 [&::-moz-range-thumb]:ring-black/10 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_1px_3px_rgba(0,0,0,0.35)] [&::-webkit-slider-thumb]:ring-1 [&::-webkit-slider-thumb]:ring-black/10 [&::-webkit-slider-thumb]:transition-transform [&:hover::-webkit-slider-thumb]:scale-110 [&:active::-webkit-slider-thumb]:scale-95"
                 />
               </div>
             </div>
