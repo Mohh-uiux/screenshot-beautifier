@@ -191,6 +191,8 @@ export const DEFAULT_SETTINGS = {
   noise: 0,
   frame: 'mac' as const,
   frameTheme: 'light' as const,
+  borderWidth: 16,
+  borderColor: '#ffffff',
   aspectRatio: 'auto',
   tiltX: 0,
   tiltY: 0,

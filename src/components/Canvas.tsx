@@ -75,6 +75,11 @@ export function Canvas({ image, settings, exportRef }: Props) {
                 boxShadow: shadowValue(settings.shadow),
                 transform: `rotateX(${settings.tiltX}deg) rotateY(${settings.tiltY}deg)`,
                 transformStyle: 'preserve-3d',
+                boxSizing: 'border-box',
+                border:
+                  settings.frame === 'custom'
+                    ? `${settings.borderWidth}px solid ${settings.borderColor}`
+                    : undefined,
               }}
             >
               <FrameBar frame={settings.frame} theme={settings.frameTheme} barH={layout.barH} />

@@ -25,12 +25,15 @@ export function computeLayout(
   const imgH = Math.round(naturalHeight * scale)
 
   const barH =
-    settings.frame === 'none'
-      ? 0
-      : Math.round(Math.min(Math.max(imgW * 0.03, 22), 40))
+    settings.frame === 'mac' || settings.frame === 'windows'
+      ? Math.round(Math.min(Math.max(imgW * 0.03, 22), 40))
+      : 0
 
-  const cardW = imgW
-  const cardH = imgH + barH
+  // Custom frame wraps the screenshot in a uniform border on all four sides.
+  const border = settings.frame === 'custom' ? Math.max(0, settings.borderWidth) : 0
+
+  const cardW = imgW + border * 2
+  const cardH = imgH + barH + border * 2
 
   const p = settings.padding
   const minW = cardW + p * 2

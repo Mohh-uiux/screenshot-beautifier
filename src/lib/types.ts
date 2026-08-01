@@ -1,4 +1,4 @@
-export type FrameStyle = 'none' | 'mac' | 'browser' | 'safari' | 'tabs' | 'windows'
+export type FrameStyle = 'none' | 'mac' | 'windows' | 'custom'
 export type FrameTheme = 'light' | 'dark'
 
 export interface Settings {
@@ -9,6 +9,8 @@ export interface Settings {
   noise: number
   frame: FrameStyle
   frameTheme: FrameTheme
+  borderWidth: number
+  borderColor: string
   aspectRatio: string
   tiltX: number
   tiltY: number

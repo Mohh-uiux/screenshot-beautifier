@@ -10,16 +10,16 @@ export function Uploader({ onFile }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-neutral-50 px-6 dark:bg-neutral-950">
+    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-neutral-950 px-6">
       {/* ambient glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-[56%] rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#a5b4fc_0deg,#ddd6fe_120deg,#a5f3fc_240deg,#a5b4fc_360deg)] opacity-50 blur-[120px] dark:opacity-25" />
+        <div className="absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-[56%] rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#6366f1_0deg,#8b5cf6_120deg,#22d3ee_240deg,#6366f1_360deg)] opacity-30 blur-[130px]" />
       </div>
 
       {/* grain */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 opacity-[0.05]"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
@@ -29,7 +29,7 @@ export function Uploader({ onFile }: Props) {
       {/* wordmark */}
       <div className="absolute left-1/2 top-8 -translate-x-1/2">
         <span
-          className="text-2xl italic leading-none tracking-tight text-neutral-900 dark:text-neutral-100"
+          className="text-2xl italic leading-none tracking-tight text-neutral-100"
           style={{ fontFamily: SERIF }}
         >
           prettify
@@ -38,14 +38,17 @@ export function Uploader({ onFile }: Props) {
 
       {/* hero */}
       <div className="relative z-10 flex w-full max-w-xl flex-col items-center text-center">
-        <h1 className="mb-4 text-5xl font-medium leading-[1.05] tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-6xl">
+        <h1 className="mb-4 text-5xl font-medium leading-[1.05] tracking-tight text-neutral-50 sm:text-6xl">
           Beautiful screenshots,
           <br />
-          <span className="italic" style={{ fontFamily: SERIF }}>
+          <span
+            className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text italic text-transparent"
+            style={{ fontFamily: SERIF }}
+          >
             in seconds.
           </span>
         </h1>
-        <p className="mb-10 max-w-md text-pretty text-base leading-relaxed text-neutral-500 dark:text-neutral-400">
+        <p className="mb-10 max-w-md text-pretty text-base leading-relaxed text-neutral-400">
           Drop a screenshot and prettify wraps it in gorgeous backgrounds,
           frames, and shadows. Free, private, all in your browser.
         </p>
@@ -53,9 +56,9 @@ export function Uploader({ onFile }: Props) {
         {/* dropzone */}
         <button
           onClick={() => inputRef.current?.click()}
-          className="group relative flex w-full flex-col items-center gap-4 rounded-3xl border border-neutral-200/70 bg-white/60 px-8 py-14 shadow-[0_20px_60px_-24px_rgba(23,23,23,0.20)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-neutral-300 hover:bg-white/80 hover:shadow-[0_32px_80px_-28px_rgba(23,23,23,0.28)] dark:border-neutral-700/60 dark:bg-neutral-900/50 dark:hover:border-neutral-600 dark:hover:bg-neutral-900/70"
+          className="group relative flex w-full flex-col items-center gap-4 rounded-3xl border border-white/10 bg-white/[0.03] px-8 py-14 shadow-[0_30px_80px_-32px_rgba(0,0,0,0.7)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06]"
         >
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-neutral-900 text-white transition duration-300 group-hover:scale-105 dark:bg-white dark:text-neutral-900">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-neutral-900 shadow-[0_8px_24px_-6px_rgba(139,92,246,0.5)] transition duration-300 group-hover:scale-105">
             <svg
               width="22"
               height="22"
@@ -72,12 +75,12 @@ export function Uploader({ onFile }: Props) {
             </svg>
           </span>
           <span>
-            <span className="block text-base font-medium text-neutral-800 dark:text-neutral-200">
+            <span className="block text-base font-medium text-neutral-100">
               Drop a screenshot here
             </span>
-            <span className="mt-1 block text-sm text-neutral-400 dark:text-neutral-500">
+            <span className="mt-1 block text-sm text-neutral-500">
               or{' '}
-              <span className="text-neutral-600 underline decoration-neutral-300 underline-offset-2 dark:text-neutral-300 dark:decoration-neutral-600">
+              <span className="text-neutral-300 underline decoration-white/20 underline-offset-2">
                 click to upload
               </span>{' '}
               · paste with ⌘V
@@ -87,7 +90,7 @@ export function Uploader({ onFile }: Props) {
       </div>
 
       {/* footer */}
-      <div className="absolute bottom-6 text-xs tracking-wide text-neutral-400 dark:text-neutral-500">
+      <div className="absolute bottom-6 text-xs tracking-wide text-neutral-600">
         No sign-up · nothing leaves your device
       </div>
 

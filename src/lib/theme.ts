@@ -17,14 +17,13 @@ function apply(mode: ThemeMode): void {
 }
 
 /**
- * App-chrome theme. Defaults to the system preference and persists any
- * manual override to localStorage. While in "system" mode it also follows
- * live OS theme changes.
+ * App-chrome theme. Defaults to dark and persists any manual override to
+ * localStorage. While in "system" mode it also follows live OS theme changes.
  */
 export function useTheme() {
   const [theme, setThemeState] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') return 'system'
-    return (localStorage.getItem(KEY) as ThemeMode | null) ?? 'system'
+    if (typeof window === 'undefined') return 'dark'
+    return (localStorage.getItem(KEY) as ThemeMode | null) ?? 'dark'
   })
 
   useEffect(() => {

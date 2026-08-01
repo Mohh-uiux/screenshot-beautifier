@@ -15,7 +15,7 @@
       // Apply the saved (or system) theme before paint to avoid a flash.
       (function () {
         try {
-          var t = localStorage.getItem('pf-theme') || 'system'
+          var t = localStorage.getItem('pf-theme') || 'dark'
           var dark =
             t === 'dark' ||
             (t === 'system' &&

@@ -1,6 +1,6 @@
 import type { FrameStyle, FrameTheme, Settings } from '../lib/types'
 import { ASPECT_RATIOS } from '../lib/presets'
-import { Section, Slider } from './panelKit'
+import { ColorField, Section, Slider } from './panelKit'
 
 interface Props {
   settings: Settings
@@ -11,10 +11,8 @@ interface Props {
 const FRAMES: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
   { value: 'mac', label: 'macOS' },
-  { value: 'browser', label: 'Browser' },
-  { value: 'safari', label: 'Safari' },
-  { value: 'tabs', label: 'Tabs' },
   { value: 'windows', label: 'Windows' },
+  { value: 'custom', label: 'Custom' },
 ]
 
 const THEMES: { value: FrameTheme; label: string }[] = [
@@ -57,29 +55,48 @@ export function ControlsPanel({ settings, onChange, onNewImage }: Props) {
             ))}
           </div>
 
-          <div className="relative mt-3 grid grid-cols-2 gap-2">
-            {THEMES.map((t) => (
-              <button
-                key={t.value}
-                disabled={settings.frame === 'none'}
-                onClick={() => onChange({ frameTheme: t.value })}
-                className={`rounded-md border px-2 py-1.5 text-sm transition disabled:opacity-40 ${
-                  settings.frameTheme === t.value
-                    ? 'border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900'
-                    : 'border-neutral-200 text-neutral-700 enabled:hover:border-neutral-300 dark:border-neutral-700 dark:text-neutral-300 dark:enabled:hover:border-neutral-500'
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-            {settings.frame === 'none' && (
-              <div className="group absolute inset-0 cursor-not-allowed">
-                <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 shadow-md transition group-hover:opacity-100 dark:bg-neutral-700">
-                  Select a frame first
+          {(settings.frame === 'mac' || settings.frame === 'windows') && (
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {THEMES.map((t) => (
+                <button
+                  key={t.value}
+                  onClick={() => onChange({ frameTheme: t.value })}
+                  className={optionBtn(settings.frameTheme === t.value)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {settings.frame === 'custom' && (
+            <div className="mt-3 space-y-3">
+              <Slider
+                label="Thickness"
+                value={settings.borderWidth}
+                min={0}
+                max={80}
+                onChange={(v) => onChange({ borderWidth: v })}
+              />
+              <div className="flex items-center gap-2">
+                <ColorField value={settings.borderColor} onChange={(v) => onChange({ borderColor: v })} />
+                <span className="font-mono text-xs uppercase text-neutral-500 dark:text-neutral-400">
+                  {settings.borderColor}
                 </span>
+                <div className="ml-auto flex gap-1.5">
+                  {['#ffffff', '#0a0a0a', '#f5f5f4'].map((c) => (
+                    <button
+                      key={c}
+                      title={c}
+                      onClick={() => onChange({ borderColor: c })}
+                      className="h-6 w-6 rounded-md ring-1 ring-black/10 transition hover:scale-110 dark:ring-white/15"
+                      style={{ background: c }}
+                    />
+                  ))}
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </Section>
 
         <Section title="Adjust">

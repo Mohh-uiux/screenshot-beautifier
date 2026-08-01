@@ -9,7 +9,6 @@ import { ControlsPanel } from './components/ControlsPanel'
 import { Canvas } from './components/Canvas'
 import { Uploader } from './components/Uploader'
 import { MobileNotice } from './components/MobileNotice'
-import { ThemeToggle } from './components/ThemeToggle'
 import { useTheme } from './lib/theme'
 
 const MOBILE_QUERY = '(max-width: 767px)'
@@ -248,10 +247,7 @@ export default function App() {
           />
         </>
       ) : (
-        <>
-          <Uploader onFile={handleFile} />
-          <ThemeToggle theme={theme} setTheme={setTheme} />
-        </>
+        <Uploader onFile={handleFile} />
       )}
 
       {dragging && (
