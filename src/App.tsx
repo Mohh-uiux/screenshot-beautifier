@@ -114,7 +114,7 @@ export default function App() {
 
   return (
     <div
-      className="relative h-full bg-neutral-100 dark:bg-neutral-950"
+      className="relative h-full overflow-hidden bg-neutral-100 dark:bg-neutral-950"
       onDragOver={(e) => {
         e.preventDefault()
         setDragging(true)
@@ -141,29 +141,39 @@ export default function App() {
 
       {image ? (
         <>
-          <div className="h-full px-80">
+          {/* ambient wash — a blurred, dimmed echo of the chosen background so
+              the glass panels have real color to refract at the edges */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div
+              className="absolute inset-0 scale-125 opacity-70 blur-[130px] saturate-150 dark:opacity-45"
+              style={{ background: settings.background }}
+            />
+            <div className="absolute inset-0 bg-neutral-100/50 dark:bg-black/55" />
+          </div>
+
+          <div className="relative h-full px-80">
             <Canvas image={image} settings={settings} exportRef={exportRef} />
           </div>
 
           <div className="pointer-events-none absolute bottom-6 left-80 right-80 z-20 flex justify-center">
             <div
               ref={pillRef}
-              className="pointer-events-auto relative flex items-center gap-1.5 rounded-full bg-neutral-900 p-1.5 shadow-lg ring-1 ring-black/10 dark:bg-neutral-800 dark:ring-white/10"
+              className="glass-bar pointer-events-auto relative flex items-center gap-1.5 rounded-full p-1.5"
             >
               {menuOpen && (
-                <div className="absolute bottom-full left-1/2 mb-3 w-60 -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white p-3 text-left shadow-xl dark:border-neutral-700 dark:bg-neutral-900">
+                <div className="glass-panel absolute bottom-full left-1/2 mb-3 w-60 -translate-x-1/2 rounded-2xl p-3 text-left">
                   <div className="mb-3">
                     <div className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
                       Scale
                     </div>
-                    <div className="flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium dark:bg-neutral-800">
+                    <div className="glass-inset flex rounded-lg p-0.5 text-xs font-medium">
                       {[1, 2, 3].map((s) => (
                         <button
                           key={s}
                           onClick={() => setExportScale(s)}
-                          className={`flex-1 rounded-[5px] py-1 transition ${
+                          className={`flex-1 rounded-md py-1 transition ${
                             exportScale === s
-                              ? 'bg-white text-neutral-900 shadow-sm dark:bg-neutral-700 dark:text-white'
+                              ? 'glass-chip text-neutral-900 dark:text-white'
                               : 'text-neutral-500 dark:text-neutral-400'
                           }`}
                         >
@@ -176,14 +186,14 @@ export default function App() {
                     <div className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
                       Format
                     </div>
-                    <div className="flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium dark:bg-neutral-800">
+                    <div className="glass-inset flex rounded-lg p-0.5 text-xs font-medium">
                       {(['png', 'jpeg'] as const).map((f) => (
                         <button
                           key={f}
                           onClick={() => setExportFormat(f)}
-                          className={`flex-1 rounded-[5px] py-1 uppercase transition ${
+                          className={`flex-1 rounded-md py-1 uppercase transition ${
                             exportFormat === f
-                              ? 'bg-white text-neutral-900 shadow-sm dark:bg-neutral-700 dark:text-white'
+                              ? 'glass-chip text-neutral-900 dark:text-white'
                               : 'text-neutral-500 dark:text-neutral-400'
                           }`}
                         >
@@ -205,7 +215,7 @@ export default function App() {
               </button>
               <button
                 onClick={download}
-                className="rounded-full bg-white px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
+                className="rounded-full bg-gradient-to-b from-white to-neutral-200 px-4 py-2 text-sm font-medium text-neutral-900 shadow-[0_2px_8px_-1px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,1)] transition hover:to-neutral-100"
               >
                 Export {exportFormat === 'png' ? 'PNG' : 'JPG'}
               </button>

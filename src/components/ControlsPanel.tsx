@@ -21,16 +21,16 @@ const THEMES: { value: FrameTheme; label: string }[] = [
 ]
 
 const optionBtn = (active: boolean) =>
-  `rounded-md border px-2 py-1.5 text-sm transition ${
+  `rounded-lg px-2 py-1.5 text-sm transition ${
     active
-      ? 'border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900'
-      : 'border-neutral-200 text-neutral-700 hover:border-neutral-300 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500'
+      ? 'glass-chip text-neutral-900 dark:text-white'
+      : 'bg-black/[0.03] text-neutral-600 ring-1 ring-inset ring-black/5 hover:bg-black/[0.06] dark:bg-white/5 dark:text-neutral-300 dark:ring-white/5 dark:hover:bg-white/10'
   }`
 
 export function ControlsPanel({ settings, onChange, onNewImage }: Props) {
   return (
-    <aside className="absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur dark:border-neutral-700/60 dark:bg-neutral-900/90 dark:ring-white/10">
-      <div className="flex items-center justify-between border-b border-neutral-200 px-5 pb-4 pt-5 dark:border-neutral-800">
+    <aside className="glass-panel absolute bottom-4 right-4 top-4 z-20 flex w-72 flex-col rounded-[26px]">
+      <div className="flex items-center justify-between border-b border-black/5 px-5 pb-4 pt-5 dark:border-white/5">
         <span className="text-xs font-semibold uppercase tracking-wide text-neutral-400 dark:text-neutral-500">
           Studio
         </span>

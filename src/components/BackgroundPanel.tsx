@@ -47,8 +47,8 @@ export function BackgroundPanel({ settings, onChange, imageSrc, theme, setTheme 
   }
 
   return (
-    <aside className="absolute bottom-4 left-4 top-4 z-20 flex w-72 flex-col rounded-2xl border border-neutral-200/70 bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur dark:border-neutral-700/60 dark:bg-neutral-900/90 dark:ring-white/10">
-      <div className="flex items-center justify-between border-b border-neutral-200 px-5 pb-4 pt-5 dark:border-neutral-800">
+    <aside className="glass-panel absolute bottom-4 left-4 top-4 z-20 flex w-72 flex-col rounded-[26px]">
+      <div className="flex items-center justify-between border-b border-black/5 px-5 pb-4 pt-5 dark:border-white/5">
         <span
           className="text-2xl italic leading-none tracking-tight text-neutral-900 dark:text-neutral-100"
           style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
@@ -123,14 +123,14 @@ export function BackgroundPanel({ settings, onChange, imageSrc, theme, setTheme 
         </Section>
 
         <Section title="Custom">
-          <div className="mb-3 flex rounded-md bg-neutral-100 p-0.5 text-xs font-medium dark:bg-neutral-800">
+          <div className="glass-inset mb-3 flex rounded-lg p-0.5 text-xs font-medium">
             {(['solid', 'gradient'] as const).map((m) => (
               <button
                 key={m}
                 onClick={() => setCustomMode(m)}
-                className={`flex-1 rounded-[5px] py-1 capitalize transition ${
+                className={`flex-1 rounded-md py-1 capitalize transition ${
                   customMode === m
-                    ? 'bg-white text-neutral-900 shadow-sm dark:bg-neutral-700 dark:text-white'
+                    ? 'glass-chip text-neutral-900 dark:text-white'
                     : 'text-neutral-500 dark:text-neutral-400'
                 }`}
               >

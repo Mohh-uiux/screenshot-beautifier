@@ -35,9 +35,12 @@ const OPTIONS: { value: ThemeMode; label: string; icon: React.ReactNode }[] = [
 
 export function ThemeToggle({ theme, setTheme, floating = true }: Props) {
   const wrap = floating
-    ? 'pointer-events-auto absolute bottom-6 left-6 z-30 gap-0.5 border border-neutral-200/70 bg-white/80 p-1 shadow-lg ring-1 ring-black/5 backdrop-blur dark:border-neutral-700/60 dark:bg-neutral-900/80 dark:ring-white/10'
-    : 'gap-0.5 bg-neutral-100 p-0.5 dark:bg-neutral-800'
+    ? 'glass-bar pointer-events-auto absolute bottom-6 left-6 z-30 gap-0.5 p-1'
+    : 'glass-inset gap-0.5 p-0.5'
   const btn = floating ? 'h-8 w-8' : 'h-7 w-7'
+  const activeCls = floating
+    ? 'bg-white text-neutral-900'
+    : 'glass-chip text-neutral-900 dark:text-white'
   return (
     <div className={`flex items-center rounded-full ${wrap}`}>
       {OPTIONS.map((o) => (
@@ -49,8 +52,10 @@ export function ThemeToggle({ theme, setTheme, floating = true }: Props) {
           aria-pressed={theme === o.value}
           className={`flex items-center justify-center rounded-full transition ${btn} ${
             theme === o.value
-              ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
-              : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+              ? activeCls
+              : floating
+                ? 'text-neutral-400 hover:text-white'
+                : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
           }`}
         >
           {o.icon}

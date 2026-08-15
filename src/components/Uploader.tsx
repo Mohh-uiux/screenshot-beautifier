@@ -66,7 +66,7 @@ export function Uploader({ onFile }: Props) {
         {/* dropzone */}
         <button
           onClick={() => inputRef.current?.click()}
-          className="group relative flex w-full flex-col items-center gap-4 rounded-3xl border border-white/10 bg-white/[0.03] px-8 py-14 shadow-[0_30px_80px_-32px_rgba(0,0,0,0.7)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06]"
+          className="group relative flex w-full flex-col items-center gap-4 rounded-3xl border border-white/10 bg-white/[0.04] px-8 py-14 shadow-[0_30px_80px_-32px_rgba(0,0,0,0.7),inset_0_1px_0_0_rgba(255,255,255,0.14),inset_0_-20px_40px_-30px_rgba(255,255,255,0.08)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.07]"
         >
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-neutral-900 shadow-[0_8px_24px_-6px_rgba(139,92,246,0.5)] transition duration-300 group-hover:scale-105">
             <svg
