@@ -185,6 +185,8 @@ export const ASPECT_RATIOS: { name: string; value: string; ratio: number | null 
 
 export const DEFAULT_SETTINGS = {
   background: GRADIENTS[0].value,
+  backgroundBlur: 0,
+  backgroundDim: 0,
   padding: 96,
   cornerRadius: 12,
   shadow: 55,

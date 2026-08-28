@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { Settings } from '../lib/types'
 import { GRADIENTS, MESHES, SOLIDS } from '../lib/presets'
 import { buildGradient, matchGradient } from '../lib/color'
 import type { ThemeMode } from '../lib/theme'
-import { ColorField, Section, Swatch } from './panelKit'
+import { ColorField, Section, Slider, Swatch } from './panelKit'
 import { ThemeToggle } from './ThemeToggle'
 
 interface Props {
@@ -21,8 +21,21 @@ export function BackgroundPanel({ settings, onChange, imageSrc, theme, setTheme 
   const [gradB, setGradB] = useState('#764ba2')
   const [angle, setAngle] = useState(135)
   const [matching, setMatching] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null)
 
+  const isImageBg = settings.background.includes('url(')
   const customGradient = buildGradient(gradA, gradB, angle)
+
+  const uploadBackground = (file: File) => {
+    const reader = new FileReader()
+    reader.onload = () =>
+      onChange({
+        background: `url("${reader.result}") center / cover no-repeat`,
+        backgroundBlur: 0,
+        backgroundDim: 0,
+      })
+    reader.readAsDataURL(file)
+  }
 
   const applySolid = (c: string) => {
     setSolid(c)
@@ -79,6 +92,66 @@ export function BackgroundPanel({ settings, onChange, imageSrc, theme, setTheme 
             {matching ? 'Matching…' : 'Match to screenshot'}
           </button>
         </div>
+
+        <Section title="Image">
+          {isImageBg ? (
+            <div className="space-y-3">
+              <div
+                className="relative h-20 w-full overflow-hidden rounded-lg ring-1 ring-black/10 dark:ring-white/15"
+                style={{ background: settings.background }}
+              >
+                <button
+                  onClick={() => onChange({ background: GRADIENTS[0].value })}
+                  className="absolute right-1.5 top-1.5 rounded-md bg-black/55 px-2 py-1 text-xs font-medium text-white backdrop-blur transition hover:bg-black/75"
+                >
+                  Remove
+                </button>
+                <button
+                  onClick={() => fileRef.current?.click()}
+                  className="absolute bottom-1.5 right-1.5 rounded-md bg-black/55 px-2 py-1 text-xs font-medium text-white backdrop-blur transition hover:bg-black/75"
+                >
+                  Replace
+                </button>
+              </div>
+              <Slider
+                label="Blur"
+                value={settings.backgroundBlur}
+                min={0}
+                max={40}
+                onChange={(v) => onChange({ backgroundBlur: v })}
+              />
+              <Slider
+                label="Dim"
+                value={settings.backgroundDim}
+                min={0}
+                max={80}
+                onChange={(v) => onChange({ backgroundDim: v })}
+              />
+            </div>
+          ) : (
+            <button
+              onClick={() => fileRef.current?.click()}
+              className="flex w-full flex-col items-center gap-2 rounded-xl border border-dashed border-neutral-300 py-6 text-sm text-neutral-500 transition hover:border-neutral-400 hover:text-neutral-700 dark:border-neutral-600 dark:text-neutral-400 dark:hover:border-neutral-500 dark:hover:text-neutral-200"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 16V4M8 8l4-4 4 4" />
+                <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+              </svg>
+              Upload image
+            </button>
+          )}
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0]
+              if (f) uploadBackground(f)
+              e.target.value = ''
+            }}
+          />
+        </Section>
 
         <Section title="Gradients">
           <div className="grid grid-cols-5 gap-2">

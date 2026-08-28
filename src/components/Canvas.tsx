@@ -17,6 +17,10 @@ export function Canvas({ image, settings, exportRef }: Props) {
   const ratio = ASPECT_RATIOS.find((r) => r.value === settings.aspectRatio)?.ratio ?? null
   const layout = computeLayout(image.naturalWidth, image.naturalHeight, settings, ratio)
 
+  // A custom image background is stored as a CSS `url(...)` value; render it as
+  // a dedicated layer so blur + dim can apply without affecting the screenshot.
+  const isImageBg = settings.background.includes('url(')
+
   useLayoutEffect(() => {
     const el = viewportRef.current
     if (!el) return
@@ -46,14 +50,32 @@ export function Canvas({ image, settings, exportRef }: Props) {
         <div style={{ transform: `scale(${scale})`, transformOrigin: 'top left' }}>
           <div
             ref={exportRef}
-            className="relative"
+            className={`relative ${isImageBg ? 'overflow-hidden' : ''}`}
             style={{
               width: layout.W,
               height: layout.H,
-              background: settings.background,
+              background: isImageBg ? '#0a0a0a' : settings.background,
               perspective: Math.max(layout.W, layout.H) * 1.8,
             }}
           >
+            {isImageBg && (
+              <>
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: settings.background,
+                    filter: settings.backgroundBlur > 0 ? `blur(${settings.backgroundBlur}px)` : undefined,
+                    transform: settings.backgroundBlur > 0 ? 'scale(1.12)' : undefined,
+                  }}
+                />
+                {settings.backgroundDim > 0 && (
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: `rgba(0,0,0,${settings.backgroundDim / 100})` }}
+                  />
+                )}
+              </>
+            )}
             {settings.noise > 0 && (
               <div
                 className="pointer-events-none absolute inset-0"
